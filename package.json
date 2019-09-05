@@ -1,0 +1,22 @@
+{
+  "name": "promptpayjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tournattakit/promptpayjs.git"
+  },
+  "author": "Tour Nattakit",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tournattakit/promptpayjs/issues"
+  },
+  "homepage": "https://github.com/tournattakit/promptpayjs#readme",
+  "dependencies": {
+    "crc": "^3.8.0"
+  }
+}
