@@ -1,6 +1,6 @@
 # promptpayjs
 
-Generate **Thai QR Code**.
+Generate **QR Code payload for PromptPay**
 
 ## Usage
 
