@@ -1,7 +1,6 @@
-const crc16xmodem = require('crc/lib/crc16_xmodem');
 const payload = require('../lib/payload');
 const CONST = require('./constants');
-require('../lib/helper');
+const { fmt } = require('../lib/helper');
 
 const initValue = {
     amount: undefined,
@@ -13,43 +12,33 @@ const initValue = {
 }
 
 function promptpay(promptPayNumber, options = initValue) {
-    let {
-        amount,
-        billerId,
-        merchantName,
-        location,
-        Ref1,
-        Ref2
-    } = options;
+    let { amount, merchantName } = options;
 
     let qrString = "";
 
-    //  Mandatory (M)    
-    qrString += CONST.PAYLOAD_FORMAT_INDICATOR; // Payload Format Indicator
-    qrString += CONST.POINT_OF_INITIATION_METHOD_DYNAMIC; // Point of Initiation Method
-    qrString += payload.merchantAcctInfo(promptPayNumber, options); // Merchant Account Information
-    qrString += CONST.TRANSACTION_CURRENCY_THB; // Transaction Currency (ISO 4217)
-    // Optional (O)
+    qrString += CONST.PAYLOAD_FORMAT_INDICATOR;
+    
+    qrString += CONST.POI_METHOD_DYNAMIC;
+
+    qrString += payload.merchantAcctInfo(promptPayNumber, options);
+
+    qrString += CONST.TRANSACTION_CURRENCY_THB;
+
     if (typeof amount !== 'undefined') {
-        // Transaction Amount
         amount = amount.toFixed(2);
-        console.log("amt: ", amount)
-        qrString += "54" + amount.length.pad(2) + amount;
+        qrString += fmt(CONST.root.TRAN_AMT_ID, amount);
     }
-    qrString += "5802TH"; // Country Code (ISO 3166-1 alpha-2)
+
+    qrString += fmt(CONST.root.CC_ID, "TH");
+
     if (typeof merchantName !== 'undefined') {
-        // Merchant Name
-        qrString += "59" + options.merchantName.length.pad(2) + options.merchantName;
+        qrString += fmt(CONST.root.MN_ID, merchantName);
     }
 
     // CRC
-    qrString += "63" + "04";
-    console.log("before", qrString);
-    const crc16 = crc16xmodem(qrString, 0xffff).toString(16);
-    console.log("crc16: ", crc16);
-    qrString += crc16;
+    qrString = payload.crc(qrString);
 
     return qrString
 }
 
-module.exports.promptpay = promptpay;
+module.exports = promptpay;

@@ -5,15 +5,10 @@ Generate **QR Code payload for PromptPay**
 ## Usage
 
 ```javascript
-const { promptpay } = require('./src/promptpay');
+const promptpay = require('./src/promptpay');
 
-const thaiQRCode = promptpay("9999999999");
+let payload = promptpay("0812345678", { amount: 100,});
 ```
-
-## To do
-
-- [x] Generate Thai QR Code Tag29.
-- [ ] Generate Thai QR Code Tag30.
 
 ## Source :pizza:
 
