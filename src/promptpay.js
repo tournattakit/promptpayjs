@@ -18,7 +18,7 @@ function promptpay(promptPayNumber, options = initValue) {
 
     qrString += CONST.PAYLOAD_FORMAT_INDICATOR;
     
-    qrString += CONST.POI_METHOD_DYNAMIC;
+    qrString += amount ? CONST.POI_METHOD_STATIC : CONST.POI_METHOD_DYNAMIC;
 
     qrString += payload.merchantAcctInfo(promptPayNumber, options);
 
